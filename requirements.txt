@@ -1,0 +1,4 @@
+opencv
+pynput
+pytest
+mediapipe

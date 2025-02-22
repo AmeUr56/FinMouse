@@ -1,4 +1,12 @@
 import cv2
+import mediapipe as mp
+
+from hand_tracking import HandTracker
+mp_hands = mp.solutions.hands
+mp_draw = mp.solutions.drawing_utils
+
+# Create instance of HandTracker
+hands = HandTracker(circles_size=5,flip_frame=True,cross_fings_exit=True)
 
 # Capture Video Stream
 cap = cv2.VideoCapture(2)
@@ -11,18 +19,18 @@ while cap.isOpened():
     if not ret:
         break
     
-    # Flip horizontally the frame
-    flipped_horiz_frame = cv2.flip(frame, 1)
+    result, frame = hands.find_hands(frame)
+    frame, cross_fings_exit = hands.draw_landmarks_on_frame(frame,result)
+
+    if cross_fings_exit:
+        break
     
-    # Add Text to the image
-    cv2.putText(flipped_horiz_frame,"FinMouse",(0, 20),cv2.FONT_HERSHEY_DUPLEX, 1,(46, 204, 113))
-    
-    # Display the current frame 
-    cv2.imshow('FinMouse', flipped_horiz_frame)
-    
-    # Wait for 30 milliseconds before desplaying the next frame
+    # Display the current frame
+    cv2.imshow('FinMouse', frame)
+
+    # Wait for 20 milliseconds before desplaying the next frame
     # Click 'q' to exit
-    if cv2.waitKey(30) & 0xFF == ord('q'):
+    if cv2.waitKey(20) & 0xFF == ord('q'):
         break
 
 # Close the camera capture
