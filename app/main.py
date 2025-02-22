@@ -2,8 +2,6 @@ import cv2
 import mediapipe as mp
 
 from hand_tracking import HandTracker
-mp_hands = mp.solutions.hands
-mp_draw = mp.solutions.drawing_utils
 
 # Create instance of HandTracker
 hands = HandTracker(circles_size=5,flip_frame=True,cross_fings_exit=True)

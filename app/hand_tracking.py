@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+import time
 
 from mouse_controle import move_mouse, click_mouse
 
@@ -52,7 +53,7 @@ class HandTracker:
         
         # Get Hand type Left of Right
         if result.multi_hand_landmarks:
-            for hand_index, hand_landmarks in enumerate(result.multi_hand_landmarks):
+            for hand_index, _ in enumerate(result.multi_hand_landmarks):
                 
                 if result.multi_handedness:
                     self.hand_label = result.multi_handedness[hand_index].classification[0].label  # "Left" or "Right"
@@ -130,12 +131,13 @@ class HandTracker:
             if self.cross_fings_exit:
                 if self.hand_label == "Right":
                     if x_8 > x_12:
+                        time.sleep(0.5)
                         return frame, 1
-            
+
                 elif self.hand_label == "Left":
                     if x_8 < x_12:
-                        return frame, 1
-            
+                        time.sleep(0.5)
+                        return frame, 1      
                  
         return frame, 0
 

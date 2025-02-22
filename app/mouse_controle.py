@@ -22,7 +22,7 @@ def move_mouse(position):
 
 def click_mouse(button,count=1):
     """
-    Clicks the button * times.
+    Clicks the button # times.
     
     Parameters:
     - type(string): left or right or other buttons in the mouse.
